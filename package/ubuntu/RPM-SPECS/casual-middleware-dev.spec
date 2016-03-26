@@ -23,7 +23,7 @@ This is the development package for casual-middleware
 %install
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/casual/middleware/include
 
-install -m 0755  %{source_root}/usr/local/include/* $RPM_BUILD_ROOT/usr/local/casual/middleware/include
+install -m 0755  %{source_root}/usr/local/casual/include/* $RPM_BUILD_ROOT/usr/local/casual/middleware/include
 
 %files
 /usr/local/casual/middleware/include
