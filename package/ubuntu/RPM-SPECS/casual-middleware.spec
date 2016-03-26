@@ -25,10 +25,10 @@ install -m 0755 -d $RPM_BUILD_ROOT/usr/local/casual/middleware/configuration
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/casual/middleware/internal
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/casual/middleware/internal/bin
 
-install -m 0755  %{source_root}/usr/local/bin/* $RPM_BUILD_ROOT/usr/local/casual/middleware/bin
-install -m 0755  %{source_root}/usr/local/lib/* $RPM_BUILD_ROOT/usr/local/casual/middleware/lib
-install -m 0755  %{source_root}/usr/local/configuration/* $RPM_BUILD_ROOT/usr/local/casual/middleware/configuration
-install -m 0755  %{source_root}/usr/local/internal/bin/* $RPM_BUILD_ROOT/usr/local/casual/middleware/internal/bin
+install -m 0755  %{source_root}/usr/local/casual/bin/* $RPM_BUILD_ROOT/usr/local/casual/middleware/bin
+install -m 0755  %{source_root}/usr/local/casual/lib/* $RPM_BUILD_ROOT/usr/local/casual/middleware/lib
+install -m 0755  %{source_root}/usr/local/casual/configuration/* $RPM_BUILD_ROOT/usr/local/casual/middleware/configuration
+install -m 0755  %{source_root}/usr/local/casual/internal/bin/* $RPM_BUILD_ROOT/usr/local/casual/middleware/internal/bin
 
 %files
 /usr/local/casual
