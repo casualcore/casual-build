@@ -22,11 +22,14 @@ This is the development package for casual-middleware
 %build
 %install
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/casual/middleware/include
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/casual/middleware/include/buffer
 
 install -m 0755  %{source_root}/usr/local/casual/include/* $RPM_BUILD_ROOT/usr/local/casual/middleware/include
+install -m 0755  %{source_root}/usr/local/casual/include/buffer/* $RPM_BUILD_ROOT/usr/local/casual/middleware/include/buffer
 
 %files
 /usr/local/casual/middleware/include
+/usr/local/casual/middleware/include/buffer
 
 %changelog
 * Tue Sep  22 2015  Fredrik Eriksson <lazan@laz.se> 
