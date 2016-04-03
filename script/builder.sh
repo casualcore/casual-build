@@ -10,3 +10,4 @@ find middleware -name "bin" | xargs rm -rf
 find middleware -name ".unttest_domain_home" | xargs rm -rf
 find middleware -name ".casual" | xargs rm -rf
 find thirdparty/unittest/gtest/  -name ".casual" | xargs rm -rf
+find thirdparty/ -name ".casual" | xargs rm -rf
