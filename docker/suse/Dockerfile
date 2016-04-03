@@ -2,7 +2,7 @@ FROM opensuse:latest
 MAINTAINER flurig <flurig@localhost>
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive install libuuid-devel pugixml-devel sqlite3-devel gcc-c++ git python make wget cmake tar
+RUN zypper --non-interactive install libuuid-devel pugixml-devel sqlite3-devel gcc-c++ git python make wget cmake tar rsync
 
 RUN wget --no-check-certificate https://github.com/jbeder/yaml-cpp/archive/release-0.3.0.tar.gz && tar xf release-0.3.0.tar.gz && cd yaml-cpp-release-0.3.0 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && make install && rm -rf /release-0.3.0.tar.gz /yaml-cpp-release-0.3.0
 
