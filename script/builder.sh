@@ -9,3 +9,4 @@ find . -name ".casual" | xargs rm -rf
 find middleware -name "obj" | xargs rm -rf
 find middleware -name "bin" | xargs rm -rf
 find middleware -name ".unttest_domain_home" | xargs rm -rf
+chmod +w -R .
