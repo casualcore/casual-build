@@ -2,4 +2,6 @@
 
 casual-admin domain --boot
 
-sleep 600
+sleep 5
+
+while $( pgrep ^casual-broker$ > 0); do sleep 5; done
