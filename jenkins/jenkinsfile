@@ -1,0 +1,38 @@
+node {
+   // Mark the code checkout 'stage'....
+   stage('Checkout') {
+   
+    
+       checkout([
+           $class: 'GitSCM', 
+           branches: [[name: '*/develop']], 
+           doGenerateSubmoduleConfigurations: false, 
+           extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'casual']], 
+           submoduleCfg: [], 
+           userRemoteConfigs: [[credentialsId: env.API_KEY, url: 'https://bitbucket.org/casualcore/casual.git']]
+        ])
+   
+//       checkout([
+//           $class: 'GitSCM', 
+//           branches: [[name: '*/master']], 
+//           doGenerateSubmoduleConfigurations: false, 
+//           extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'casual-build']], 
+//           submoduleCfg: [], 
+//           userRemoteConfigs: [[credentialsId: env.API_KEY, url: 'https://git@bitbucket.org/casualcore/casual-build.git']]
+//        ])
+   }
+   // Mark the code build 'stage'....
+   stage('Build') {
+
+       sh "cp casual-build/script/build-server.sh casual/builder.sh"
+       sh "if docker ps -a | grep ubuntucompile; then docker rm ubuntucompile;fi"
+       def current_dir = pwd()
+       sh "docker run --name ubuntucompile -v $current_dir/casual:/git/casual casual/ubuntu"
+   }
+   
+   stage('publish test result') {
+   
+      junit '**/report.xml'
+      
+   }
+}
