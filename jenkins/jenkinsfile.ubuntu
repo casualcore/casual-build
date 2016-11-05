@@ -2,11 +2,11 @@ def fetch_repo( repository, branch, directory)
 {
    checkout([
        $class: 'GitSCM', 
-       branches: [[name: $branch]], 
+       branches: [[name: branch]], 
        doGenerateSubmoduleConfigurations: false, 
-       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: $directory]], 
+       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: directory]], 
        submoduleCfg: [], 
-       userRemoteConfigs: [[credentialsId: env.API_KEY, url: $repository]]
+       userRemoteConfigs: [[credentialsId: env.API_KEY, url: repository]]
    ])
 }
 
@@ -14,8 +14,8 @@ def build( name, image)
 {
    def current_dir = pwd()
    sh "cp casual-build/script/build-server.sh casual/builder.sh"
-   sh "if docker ps -a | grep $name; then docker rm $name;fi"
-   sh "docker run --name $name -v $current_dir/casual:/git/casual $image"
+   sh "if docker ps -a | grep "name"; then docker rm "name";fi"
+   sh "docker run --name "name" -v $current_dir/casual:/git/casual "image
 } 
 
 node {
