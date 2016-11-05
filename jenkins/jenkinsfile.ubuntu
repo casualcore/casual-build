@@ -1,29 +1,37 @@
+def fetch_repo( repository, branch, directory)
+{
+   checkout([
+       $class: 'GitSCM', 
+       branches: [[name: $branch]], 
+       doGenerateSubmoduleConfigurations: false, 
+       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: $directory]], 
+       submoduleCfg: [], 
+       userRemoteConfigs: [[credentialsId: env.API_KEY, url: $repository]]
+   ])
+}
+
+def build( name, image)
+{
+   def current_dir = pwd()
+   sh "cp casual-build/script/build-server.sh casual/builder.sh"
+   sh "if docker ps -a | grep $name; then docker rm $name;fi"
+   sh "docker run --name $name -v $current_dir/casual:/git/casual $image"
+} 
+
 node {
    // Mark the code checkout 'stage'....
    stage('Checkout') {
 
-      checkout([
-          $class: 'GitSCM', 
-          branches: [[name: '*/develop']], 
-          doGenerateSubmoduleConfigurations: false, 
-          extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'casual']], 
-          submoduleCfg: [], 
-          userRemoteConfigs: [[credentialsId: env.API_KEY, url: 'https://bitbucket.org/casualcore/casual.git']]
-       ])
+      fetch_repo( 'https://bitbucket.org/casualcore/casual.git', '*/develop', 'casual')
    }
 
-   stage('Build') {
+   stage('Build/Unittest') {
 
-       sh "cp casual-build/script/build-server.sh casual/builder.sh"
-       sh "if docker ps -a | grep ubuntucompile; then docker rm ubuntucompile;fi"
-       def current_dir = pwd()
-       sh "docker run --name ubuntucompile -v $current_dir/casual:/git/casual casual/ubuntu"
-   }
-   
-   stage('publish test result') {
-   
+       build( 'ubuntucompile', 'casual/ubuntu')
+
        step([$class: 'XUnitBuilder',
           thresholds: [[$class: 'FailedThreshold', failureThreshold: '1']],
           tools: [[$class: 'GoogleTestType', pattern: '**/report.xml']]])
    }
+   
 }
