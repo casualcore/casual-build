@@ -1,3 +1,5 @@
+#!groovy
+
 def fetch_repo( repository, branch, directory)
 {
    checkout([
@@ -32,6 +34,8 @@ node {
        step([$class: 'XUnitBuilder',
           thresholds: [[$class: 'FailedThreshold', failureThreshold: '1']],
           tools: [[$class: 'GoogleTestType', pattern: '**/report.xml']]])
+
+       archive include: '**/casual.log' 
    }
    stage('Build/Unittest debian') {
 
