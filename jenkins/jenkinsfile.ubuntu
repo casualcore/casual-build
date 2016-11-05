@@ -25,9 +25,17 @@ node {
       fetch_repo( 'https://bitbucket.org/casualcore/casual.git', '*/develop', 'casual')
    }
 
-   stage('Build/Unittest') {
+   stage('Build/Unittest Ubuntu') {
 
        build( 'ubuntucompile', 'casual/ubuntu')
+
+       step([$class: 'XUnitBuilder',
+          thresholds: [[$class: 'FailedThreshold', failureThreshold: '1']],
+          tools: [[$class: 'GoogleTestType', pattern: '**/report.xml']]])
+   }
+   stage('Build/Unittest debian') {
+
+       build( 'debiancompile', 'casual/debian')
 
        step([$class: 'XUnitBuilder',
           thresholds: [[$class: 'FailedThreshold', failureThreshold: '1']],
