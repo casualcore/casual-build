@@ -35,7 +35,7 @@ node {
           thresholds: [[$class: 'FailedThreshold', failureThreshold: '1']],
           tools: [[$class: 'GoogleTestType', pattern: '**/report.xml']]])
 
-       archive include: '**/casual.log' 
+       archive includes: '**/casual.log' 
    }
    stage('Build/Unittest debian') {
 
