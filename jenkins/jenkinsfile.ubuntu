@@ -23,7 +23,7 @@ node {
    stage('publish test result') {
    
        step([$class: 'XUnitBuilder',
-          thresholds: [[$class: 'FailedThreshold', failureThreshold: '4']],
-          tools: [[$class: 'JUnitType', pattern: '**/report.xml']]])
+          thresholds: [[$class: 'FailedThreshold', failureThreshold: '1']],
+          tools: [[$class: 'GoogleTestType', pattern: '**/report.xml']]])
    }
 }
