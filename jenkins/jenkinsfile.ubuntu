@@ -13,8 +13,6 @@ def fetch_repo( repository, branch, directory)
 def build( name, image)
 {
    def current_dir = pwd()
-   def name = name
-   def image = image
    sh "cp casual-build/script/build-server.sh casual/builder.sh"
    sh "if docker ps -a | grep $name; then docker rm $name;fi"
    sh "docker run --name $name -v $current_dir/casual:/git/casual $image"
