@@ -19,7 +19,7 @@ ENV CASUAL_HOME /usr/local/casual
 ENV PATH $CASUAL_BUILD_HOME/tools/bin:$CASUAL_TOOLS_HOME/bin:$CASUAL_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$CASUAL_HOME/lib:$CASUAL_BUILD_HOME/configuration/bin:$CASUAL_BUILD_HOME/common/bin:$CASUAL_BUILD_HOME/serviceframework/bin:$CASUAL_BUILD_HOME/xatmi/bin
 ENV CASUAL_DOMAIN_HOME /test/casual
-ENV CASUAL_LOG .*
+ENV CASUAL_LOG '.*'
 
 RUN mkdir -p /git/casual
 VOLUME /git/casual
