@@ -1,13 +1,14 @@
 FROM centos:latest
 MAINTAINER flurig <flurig@localhost>
 
-RUN yum -y install wget cmake make python rsync libuuid-devel sqlite-devel libpugixml-devel zlib-devel unzip rpm-build centos-release-scl 
+RUN yum -y update && yum -y install wget cmake make python rsync libuuid-devel sqlite-devel zlib-devel unzip rpm-build centos-release-scl 
 RUN yum -y install devtoolset-4-gcc* && scl enable devtoolset-4 bash
 RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
 RUN rpm -Uvh epel-release*rpm
-RUN yum -y install pugixml-devel yaml-cpp03-devel
+RUN yum -y install pugixml-devel yaml-cpp03-devel python-pip
 RUN ln -s /usr/include/yaml-cpp03 /usr/include/yaml-cpp
 RUN ln -s /usr/lib64/libyaml-cpp03.so /usr/lib64/libyaml-cpp.so
+RUN pip install gcovr
 
 ENV CASUAL_REPO_ROOT /git
 ENV CASUAL_TOOLS_HOME $CASUAL_REPO_ROOT/casual
