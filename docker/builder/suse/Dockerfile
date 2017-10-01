@@ -2,7 +2,7 @@ FROM opensuse:latest
 MAINTAINER flurig <flurig@localhost>
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive install rpmbuild libuuid-devel pugixml-devel sqlite3-devel gcc5 gcc5-c++ git python make wget cmake tar rsync python-pip zlib-devel unzip 
+RUN zypper --non-interactive install rpmbuild libuuid-devel pugixml-devel sqlite3-devel gcc5 gcc5-c++ git python make wget cmake tar rsync python-pip zlib-devel unzip libcurl-devel
 
 RUN ls -lrt /usr/bin
 RUN ln -sf /usr/bin/gcc-5 /usr/bin/gcc
