@@ -2,11 +2,11 @@ FROM opensuse:latest
 MAINTAINER flurig <flurig@localhost>
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive install rpmbuild libuuid-devel pugixml-devel sqlite3-devel gcc5 gcc5-c++ git python make wget cmake tar rsync python-pip zlib-devel unzip libcurl-devel
+RUN zypper --non-interactive install rpmbuild libuuid-devel pugixml-devel sqlite3-devel gcc6 gcc6-c++ git python make wget cmake tar rsync python-pip zlib-devel unzip libcurl-devel
 
 RUN ls -lrt /usr/bin
-RUN ln -sf /usr/bin/gcc-5 /usr/bin/gcc
-RUN ln -sf /usr/bin/g++-5 /usr/bin/g++
+RUN ln -sf /usr/bin/gcc-6 /usr/bin/gcc
+RUN ln -sf /usr/bin/g++-6 /usr/bin/g++
 
 RUN wget --no-check-certificate https://github.com/jbeder/yaml-cpp/archive/release-0.3.0.tar.gz && tar xf release-0.3.0.tar.gz && cd yaml-cpp-release-0.3.0 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && make install && rm -rf /release-0.3.0.tar.gz /yaml-cpp-release-0.3.0
 RUN pip install gcovr
