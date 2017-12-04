@@ -13,6 +13,7 @@ domainhome = os.environ.get('DOMAIN_HOME', '/u01/oracle/user_projects/domains/ba
 admin_name = os.environ.get('ADMIN_NAME', 'AdminServer')
 appname    = os.environ.get('APP_NAME', '')
 deploymentOrder = os.environ.get('APP_DEPLOYMENT_ORDER', '100')
+appdeploymentplan = os.environ.get('APP_DEPLOYMENT_PLAN', '' )
 apppkg     = os.environ.get('APP_PKG_FILE', '')
 appdir     = os.environ.get('APP_PKG_LOCATION', '/u01/oracle')
 cluster_name = os.environ.get("CLUSTER_NAME", "DockerCluster")
@@ -34,7 +35,12 @@ app = create(appname, 'AppDeployment')
 app.setSourcePath(appdir + '/' + apppkg)
 app.setStagingMode('nostage')
 app.setDeploymentOrder(int(deploymentOrder))
-
+print "deploymentplan: " + appdir + '/' + appdeploymentplan
+if appdeploymentplan != '':
+    app.setPlanPath(appdir + '/' + appdeploymentplan)
+else:
+    print 'no deployment plan'
+    
 # Assign application to AdminServer
 # =================================
 assign('AppDeployment', appname, 'Target', admin_name)

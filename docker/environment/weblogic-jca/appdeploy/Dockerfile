@@ -26,29 +26,25 @@ ENV APP_NAME="state-management-provider-memory-rar-impl" \
     APP_MODULE_TYPE="rar"\
     APP_DEPLOYMENT_ORDER=100\
     APP_DEPLOYMENT_PLAN=""
+    
 RUN wlst /u01/oracle/deploy.py
 
 # Define variables
 ENV APP_NAME="casual-jca" \
     APP_PKG_FILE="casual-jca-0.0.1.ear" \
-    APP_DEPLOYMENT_ORDER="50" \
-    APP_PKG_LOCATION="/u01/oracle"
-
+    APP_DEPLOYMENT_ORDER="50" \    
+    APP_PKG_LOCATION="/u01/oracle" \
+    APP_DEPLOYMENT_PLAN="exampleDeploymentPlan.xml"
+    
 RUN wlst /u01/oracle/deploy.py
 
 # Define variables
 ENV APP_NAME="casual-java-testapp" \
     APP_PKG_FILE="casual-java-testapp.war" \
     APP_DEPLOYMENT_ORDER="100" \
-    APP_PKG_LOCATION="/u01/oracle"
-
+    APP_PKG_LOCATION="/u01/oracle"\
+    APP_DEPLOYMENT_PLAN=""
+    
 RUN wlst /u01/oracle/deploy.py
 
-# Define variables
-ENV APP_NAME="casual-jca" \
-    APP_PKG_LOCATION="/u01/oracle" \
-    WLS_PASSWD="weblogic1" \
-    WLS_HOST="t3://127.0.0.1:7001" \
-    APP_DEPLOYMENT_PLAN="exampleDeploymentPlan.xml"
 
-RUN wlst /u01/oracle/updateAppDeployment.py
