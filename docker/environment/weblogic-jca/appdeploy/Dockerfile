@@ -44,3 +44,11 @@ ENV APP_NAME="casual-java-testapp" \
 
 RUN wlst /u01/oracle/deploy.py
 
+# Define variables
+ENV APP_NAME="casual-jca" \
+    APP_PKG_LOCATION="/u01/oracle" \
+    WLS_PASSWD="weblogic1" \
+    WLS_HOST="t3://127.0.0.1:7001" \
+    APP_DEPLOYMENT_PLAN="exampleDeploymentPlan.xml"
+
+RUN wlst /u01/oracle/updateAppDeployment.py

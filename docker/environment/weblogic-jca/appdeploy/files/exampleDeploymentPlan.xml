@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd" global-variables="false">
+  <application-name>casual-jca</application-name>
+  <variable-definition>
+    <variable>
+      <name>ConfigProperty_HostName_Name_15124018922050</name>
+      <value>HostName</value>
+    </variable>
+    <variable>
+      <name>ConfigProperty_HostName_Value_15124018922061</name>
+      <value>casual-example.net</value>
+    </variable>
+    <variable>
+      <name>ConfigProperty_PortNumber_Name_15124018974572</name>
+      <value>PortNumber</value>
+    </variable>
+    <variable>
+      <name>ConfigProperty_PortNumber_Value_15124018974583</name>
+      <value>8989</value>
+    </variable>
+    <variable>
+      <name>ConnectionInstance_eis/casualExampleCon_JNDIName_15124019643540</name>
+      <value>eis/casualExampleCon</value>
+    </variable>
+  </variable-definition>
+  <module-override>
+    <module-name>casual-jca-0.0.1.ear</module-name>
+    <module-type>ear</module-type>
+    <module-descriptor external="true">
+      <root-element>weblogic-application</root-element>
+      <uri>META-INF/weblogic-application.xml</uri>
+    </module-descriptor>
+    <module-descriptor external="false">
+      <root-element>application</root-element>
+      <uri>META-INF/application.xml</uri>
+    </module-descriptor>
+    <module-descriptor external="true">
+      <root-element>wldf-resource</root-element>
+      <uri>META-INF/weblogic-diagnostics.xml</uri>
+    </module-descriptor>
+  </module-override>
+  <module-override>
+    <module-name>casual-jca-0.0.1.rar</module-name>
+    <module-type>rar</module-type>
+    <module-descriptor external="false">
+      <root-element>weblogic-connector</root-element>
+      <uri>META-INF/weblogic-ra.xml</uri>
+      <variable-assignment>
+        <name>ConfigProperty_HostName_Name_15124018922050</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="se.kodarkatten.casual.jca.CasualConnectionFactory"]/default-connection-properties/properties/property/[name="HostName"]/name</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+      <variable-assignment>
+        <name>ConfigProperty_HostName_Value_15124018922061</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="se.kodarkatten.casual.jca.CasualConnectionFactory"]/default-connection-properties/properties/property/[name="HostName"]/value</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+      <variable-assignment>
+        <name>ConfigProperty_PortNumber_Name_15124018974572</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="se.kodarkatten.casual.jca.CasualConnectionFactory"]/default-connection-properties/properties/property/[name="PortNumber"]/name</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+      <variable-assignment>
+        <name>ConfigProperty_PortNumber_Value_15124018974583</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="se.kodarkatten.casual.jca.CasualConnectionFactory"]/default-connection-properties/properties/property/[name="PortNumber"]/value</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+      <variable-assignment>
+        <name>ConnectionInstance_eis/casualExampleCon_JNDIName_15124019643540</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="se.kodarkatten.casual.jca.CasualConnectionFactory"]/connection-instance/[jndi-name="eis/casualExampleCon"]/jndi-name</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+    </module-descriptor>
+    <module-descriptor external="false">
+      <root-element>connector</root-element>
+      <uri>META-INF/ra.xml</uri>
+    </module-descriptor>
+  </module-override>
+  <module-override>
+    <module-name>casual-inbound.jar</module-name>
+    <module-type>ejb</module-type>
+    <module-descriptor external="true">
+      <root-element>weblogic-ejb-jar</root-element>
+      <uri>META-INF/weblogic-ejb-jar.xml</uri>
+    </module-descriptor>
+    <module-descriptor external="false">
+      <root-element>ejb-jar</root-element>
+      <uri>META-INF/ejb-jar.xml</uri>
+    </module-descriptor>
+  </module-override>
+  <config-root>/u01/oracle/plan</config-root>
+</deployment-plan>
+
