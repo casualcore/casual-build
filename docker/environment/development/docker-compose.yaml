@@ -1,0 +1,12 @@
+version: '3'
+services:
+    development:
+        hostname: development
+        tty: true
+        build:
+            context: .
+        volumes:
+            - ${CASUAL_REPO_ROOT}:/home/casual/git
+            - /tmp/.X11-unix:/tmp/.X11-unix
+        environment:
+            - DISPLAY=${DISPLAY}
