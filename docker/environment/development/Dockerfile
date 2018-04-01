@@ -18,6 +18,7 @@ RUN apt-get update && \
     libsqlite3-dev \
     python \
     build-essential \
+    bison \
     libxss1 \
     vim
 
@@ -71,11 +72,24 @@ RUN mkdir -p /home/casual/git && \
     mkdir -p ${CASUAL_XATMI_TEST_HOME} && \
     chown -R casual:casual ${CASUAL_XATMI_TEST_HOME}
 
+RUN echo "#!/usr/bin/env bash" > /usr/local/bin/cfull-build && \
+    echo "for step in clean make compile link install; do casual-make \"\$step\" || break; done" >> /usr/local/bin/cfull-build && \
+    chmod +x /usr/local/bin/cfull-build
+
 VOLUME /home/casual/git
 
 VOLUME ${CASUAL_HOME}
 
 VOLUME ${CASUAL_XATMI_TEST_HOME}
+
+WORKDIR /usr/local/src
+
+RUN curl -O http://ftp.gnu.org/gnu/bash/bash-3.2.57.tar.gz && \
+    tar xf bash-*.tar.gz && \
+    cd bash-* && \
+    ./configure --prefix=/usr/local/bash3 && \
+    make && \
+    make install
 
 USER casual
 
