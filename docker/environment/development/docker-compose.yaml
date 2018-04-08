@@ -8,5 +8,9 @@ services:
         volumes:
             - ${CASUAL_REPO_ROOT}:/home/casual/git
             - /tmp/.X11-unix:/tmp/.X11-unix
+            - casual:/opt/casual
         environment:
             - DISPLAY=${DISPLAY}
+
+volumes:
+    casual:
