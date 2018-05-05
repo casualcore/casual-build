@@ -1,9 +1,9 @@
 FROM centos:latest
 MAINTAINER flurig <flurig@localhost>
 
-RUN yum --exclude=iputils -y update && yum -y install wget cmake make python rsync libuuid-devel sqlite-devel zlib-devel unzip rpm-build centos-release-scl libcurl-devel git
-RUN yum -y install devtoolset-6-gcc* && scl enable devtoolset-6 bash
-RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+RUN yum --exclude=iputils -y update && yum -y install wget cmake make python rsync libuuid-devel sqlite-devel zlib-devel unzip rpm-build centos-release-scl libcurl-devel
+RUN yum -y install devtoolset-4-gcc* && scl enable devtoolset-4 bash
+RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
 RUN rpm -Uvh epel-release*rpm
 RUN yum -y install pugixml-devel yaml-cpp03-devel python-pip
 RUN ln -s /usr/include/yaml-cpp03 /usr/include/yaml-cpp
@@ -33,6 +33,6 @@ RUN echo '%_topdir %(echo $HOME)/rpmbuild' > ~/.rpmmacros
 
 VOLUME /git/casual
 RUN echo 'export PATH=$PATH:/git/casual/bin' >> ~/.bashrc
-RUN echo 'source scl_source enable devtoolset-6' >> ~/.bashrc
+RUN echo 'source scl_source enable devtoolset-4' >> ~/.bashrc
 
 CMD ["/git/casual/builder.sh"]
