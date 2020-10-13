@@ -1,0 +1,18 @@
+domain:
+  default:  
+    server:
+      instances: 1
+      restart: false
+  gateway:
+    listeners:
+      - address: 0.0.0.0:7771    
+    connections:
+      - address: 0.0.0.0:7772
+        services:
+          - testJavaService
+
+  name: test-domain
+  servers:    
+    - instances: 1
+      note: exampleserver
+      path: ${CASUAL_HOME}/example/bin/casual-example-server
