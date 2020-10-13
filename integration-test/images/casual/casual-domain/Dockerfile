@@ -11,7 +11,8 @@ ENV CONFIG_DIR=$CONFIG_DIR
 
 COPY ./$CONFIG_DIR/ $CASUAL_DOMAIN_HOME/configuration
 
-RUN ls -l $CASUAL_DOMAIN_HOME/configuration
+COPY casual-fields.json $CASUAL_DOMAIN_HOME/configuration
+
+ENV CASUAL_FIELD_TABLE $CASUAL_DOMAIN_HOME/casual-fields.json
 
 EXPOSE 7771
-
