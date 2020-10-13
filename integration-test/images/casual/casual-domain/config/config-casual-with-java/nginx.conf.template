@@ -3,18 +3,12 @@ daemon off;
 
 error_log  logs/debug.log  debug;
 
-#
-# Set this to correct value
-#
-env CASUAL_DOMAIN_HOME;
-env CASUAL_HOME;
-
 events {
     worker_connections  100;
 }
 
 http {
-    include       mime.types;
+    include       ${CASUAL_HOME}/nginx/conf/mime.types;
     default_type  application/octet-stream;
     underscores_in_headers on;
 

@@ -15,4 +15,4 @@ COPY casual-fields.json $CASUAL_DOMAIN_HOME/configuration
 
 ENV CASUAL_FIELD_TABLE $CASUAL_DOMAIN_HOME/casual-fields.json
 
-EXPOSE 7771
+EXPOSE 7771 8180

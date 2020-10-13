@@ -47,6 +47,8 @@ RUN mkdir -p $CASUAL_DOMAIN_HOME
 
 RUN     chgrp -R 0 $CASUAL_DOMAIN_HOME && \
 	chmod -R g=u $CASUAL_DOMAIN_HOME && \
+        chgrp -R 0 $CASUAL_HOME && \
+	chmod -R g=u $CASUAL_HOME && \
 	chgrp -R 0 /tmp && \
 	chmod -R g=u /tmp && \
 	chmod g=u /etc/passwd
