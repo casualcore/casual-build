@@ -26,12 +26,6 @@ objects:
             ports:
               - containerPort: 7771
                 protocol: "TCP"
-            triggers:
-              -type: imageChange
-              imageChange:
-                from:
-                  kind: ImageStreamTag
-                  name: casual:latest
                 
           - image: "${REGISTRY}/${NAMESPACE}/wildfly-casual-java-test-application:latest"
             name: "wildfly-casual-java-test-application"        
@@ -44,15 +38,29 @@ objects:
               - containerPort: 9990
                 protocol: "TCP"
               - containerPort: 8080
-                protocol: "TCP"
-            triggers:
-              -type: imageChange
-              imageChange:
-                from:
-                  kind: ImageStreamTag
-                  name: wildfly-casual-java-test-application:latest                  
+                protocol: "TCP"            
     strategy: 
       type: "Rolling"
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - wildfly-casual-java-test-application
+        from:
+          kind: ImageStreamTag
+          name: 'wildfly-casual-java-test-application:latest'
+          namespace: "${NAMESPACE}"
+      type: ImageChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - casual-domain
+        from:
+          kind: ImageStreamTag
+          name: 'casual-domain:latest'
+          namespace: "${NAMESPACE}"
+      type: ImageChange
 
 parameters:
 - description: Registry address

@@ -1,6 +1,6 @@
 FROM jboss/wildfly:18.0.1.Final
  
-RUN /opt/jboss/wildfly/bin/add-user.sh admin Admin#70365 --silent
+RUN /opt/jboss/wildfly/bin/add-user.sh wildfly wildfly1 --silent
 
 EXPOSE 7772 9990 8080 9090
 

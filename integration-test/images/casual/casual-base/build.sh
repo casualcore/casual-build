@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-THE_BRANCH=${1:-feature/1.4/dev}
+THE_BRANCH=${1:-release/1.3}
 
 echo Building using casual branch $THE_BRANCH
 
