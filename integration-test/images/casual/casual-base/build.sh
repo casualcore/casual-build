@@ -4,4 +4,5 @@ THE_BRANCH=${1:-release/1.3}
 
 echo Building using casual branch $THE_BRANCH
 
+cd "$(dirname "$0")" && \
 docker build . --build-arg GIT_BRANCH=$THE_BRANCH -t casual-base

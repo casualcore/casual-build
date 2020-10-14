@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: "casual-with-wildfly-java"
+    name:  "casual-with-wildfly-java"
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 9990-tcp
+      port: 9990
+      protocol: TCP
+      targetPort: 9990
+    selector:
+      app: "casual-with-wildfly-java"
+      deploymentconfig: "casual-with-wildfly-java"
