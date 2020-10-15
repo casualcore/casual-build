@@ -31,7 +31,11 @@ objects:
             name: "wildfly-casual-java-test-application"        
             env:
               - name: DEBUG
-                value: "true"        
+                value: "true"
+              - name: CASUAL_NETWORK_OUTBOUND_ENABLE_LOGHANDLER
+                value: "true"
+              - name: CASUAL_NETWORK_INBOUND_ENABLE_LOGHANDLER
+                value: "true"
             ports:
               - containerPort: 7772
                 protocol: "TCP"

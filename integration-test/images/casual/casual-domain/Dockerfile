@@ -9,6 +9,8 @@ LABEL name="casual-domain" \
 ARG CONFIG_DIR=config/config-casual-with-java
 ENV CONFIG_DIR=$CONFIG_DIR
 
+RUN cp $CASUAL_HOME/configuration/example/resources.yaml $CASUAL_HOME/configuration/.
+
 COPY ./$CONFIG_DIR/ $CASUAL_DOMAIN_HOME/configuration
 
 COPY casual-fields.json $CASUAL_DOMAIN_HOME/configuration
