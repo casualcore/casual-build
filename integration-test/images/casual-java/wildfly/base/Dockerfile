@@ -2,8 +2,6 @@ FROM jboss/wildfly:18.0.1.Final
  
 RUN /opt/jboss/wildfly/bin/add-user.sh wildfly wildfly1 --silent
 
-EXPOSE 7772 9990 8080 9090
-
 RUN mkdir /opt/jboss/wildfly/casual
 
 ENV CASUAL_VERSION 1.0.35-beta
