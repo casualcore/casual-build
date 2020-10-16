@@ -10,6 +10,7 @@ domain:
       - address: 0.0.0.0:7772
         services:
           - testJavaService
+          - anotherJavaService
 
   name: test-domain
   servers:    
