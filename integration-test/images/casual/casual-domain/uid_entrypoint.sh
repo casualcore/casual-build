@@ -10,3 +10,4 @@ fi
 envsubst '${CASUAL_HOME}' < /${CASUAL_DOMAIN_HOME}/configuration/nginx.conf.template > $CASUAL_HOME/nginx/conf/nginx.conf
 
 exec casual-domain-manager -c $CASUAL_DOMAIN_HOME/configuration/domain.yaml
+
