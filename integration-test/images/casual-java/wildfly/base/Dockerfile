@@ -4,7 +4,7 @@ RUN /opt/jboss/wildfly/bin/add-user.sh wildfly wildfly1 --silent
 
 RUN mkdir /opt/jboss/wildfly/casual
 
-ENV CASUAL_VERSION 1.0.35-beta
+ENV CASUAL_VERSION 1.0.37-beta
 
 COPY files/casual-inbound-handler-api-${CASUAL_VERSION}.jar \
      	files/casual-fielded-annotations-${CASUAL_VERSION}.jar \
