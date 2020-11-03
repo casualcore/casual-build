@@ -11,6 +11,8 @@ domain:
         services:
           - testJavaService
           - anotherJavaService
+          - testJavaServiceAgain
+          - anotherJavaServiceAgain
 
   name: test-domain
   servers:    
