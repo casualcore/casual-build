@@ -1,0 +1,8 @@
+### Emacs ###
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+.\#*
+
+## So that we do not add any binaries by accident #
+/integration-test/images/casual-java/wls/base/
