@@ -41,8 +41,6 @@ objects:
                 protocol: "TCP"
               - containerPort: 7001
                 protocol: "TCP"
-              - containerPort: 7002
-                protocol: "TCP"            
     strategy: 
       type: "Rolling"
     triggers:

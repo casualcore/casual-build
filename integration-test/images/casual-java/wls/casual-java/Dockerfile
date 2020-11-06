@@ -71,7 +71,6 @@ ENV TEMPLATE_OUT "/u01/oracle/Plan.xml"
 COPY template/Plan.xml /tmp/
 RUN /u01/oracle/template.py
 
-
 ENV APP_NAME="casual-jca-app-${CASUAL_VERSION}" \
     APP_PKG_FILE="casual-jca-app-${CASUAL_VERSION}.ear" \
     APP_PKG_LOCATION="/u01/oracle" \
@@ -95,4 +94,4 @@ RUN  chown -R root:root /u01 && \
 
 USER 1001
 
-EXPOSE 5557 7001 7002
+EXPOSE 5557 7001

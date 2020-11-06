@@ -39,4 +39,4 @@ EXPOSE $NM_PORT $ADMIN_PORT $MS_PORT $DEBUG_PORT 7772
 WORKDIR $DOMAIN_HOME
 
 # Define default command to start bash. 
-CMD ["startWebLogic.sh"]
+CMD ["/u01/oracle//uid_entrypoint.sh"]
