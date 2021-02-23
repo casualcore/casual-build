@@ -33,9 +33,9 @@ objects:
               - name: DEBUG
                 value: "true"
               - name: CASUAL_NETWORK_OUTBOUND_ENABLE_LOGHANDLER
-                value: "true"
+                value: "false"
               - name: CASUAL_NETWORK_INBOUND_ENABLE_LOGHANDLER
-                value: "true"
+                value: "false"
             ports:
               - containerPort: 7772
                 protocol: "TCP"
