@@ -8,27 +8,31 @@ LABEL name="casual-base" \
 ARG GIT_TAG=1.3.7
 
 ENV GIT_TAG=$GIT_TAG
+
 ENV CASUAL_REPO_ROOT /tmp/code/git
 ENV CASUAL_BUILD_HOME $CASUAL_REPO_ROOT/casual
 ENV CASUAL_HOME /opt/casual
 ENV CASUAL_DOMAIN_HOME /test/casual
 
-RUN mkdir -p $CASUAL_REPO_ROOT && cd $CASUAL_REPO_ROOT && git clone https://bitbucket.org/casualcore/casual.git && cd $CASUAL_BUILD_HOME && git checkout $GIT_TAG
-RUN source scl_source enable devtoolset-7 && cd $CASUAL_BUILD_HOME && cd thirdparty/setup && CMAKE_CXX_COMPILER=g++ python install_yaml.py
+RUN mkdir -p $CASUAL_REPO_ROOT
+COPY code $CASUAL_REPO_ROOT
+RUN ls $CASUAL_REPO_ROOT
+RUN ls $CASUAL_BUILD_HOME
 
-ENV YAML_INCLUDE_PATH /usr/local/include
-ENV YAML_LIBRARY_PATH /usr/local/lib
-ENV JSON_INCLUDE_PATH /usr/local/include
-ENV JSON_LIBRARY_PATH /usr/lib/x86_64-linux-gnu
-ENV CASUAL_OPTIONAL_INCLUDE_PATHS "$CASUAL_BUILD_HOME/thirdparty/unittest/gtest/include $YAML_INCLUDE_PATH $JSON_INCLUDE_PATH"
-ENV CASUAL_OPTIONAL_LIBRARY_PATHS "$CASUAL_BUILD_HOME/thirdparty/unittest/gtest/bin $YAML_LIBRARY_PATH $JSON_LIBRARY_PATH"
+RUN ls /usr/bin/py*
+RUN cd $CASUAL_BUILD_HOME && source ./casual.env && casual-make --help
+
 ENV PATH $CASUAL_BUILD_HOME/bin:$CASUAL_HOME/bin:$PATH
-ENV PYTHONPATH $CASUAL_REPO_ROOT
 ENV PATH $CASUAL_BUILD_HOME/tools/bin:$CASUAL_BUILD_HOME/bin:$CASUAL_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$CASUAL_HOME/lib:$CASUAL_BUILD_HOME/configuration/bin:$CASUAL_BUILD_HOME/common/bin:$CASUAL_BUILD_HOME/serviceframework/bin:$CASUAL_BUILD_HOME/xatmi/bin:/usr/local/lib
 
-RUN ln -s /opt/rh/devtoolset-7/root/usr/bin/make /usr/bin/make
-RUN source scl_source enable devtoolset-7 && cd $CASUAL_BUILD_HOME && casual-make && casual-make install
+# check that std::filesystem works
+RUN dnf -y install gcc-toolset-9-gcc gcc-toolset-9-gcc-c++
+ENV PATH=/opt/rh/gcc-toolset-9/root/usr/bin:$PATH
+RUN cd $CASUAL_BUILD_HOME && g++ -v -std=c++17 -o test-fs test.cpp && ./test-fs
+
+RUN cd $CASUAL_BUILD_HOME && source ./casual.env && casual-make compile --debug
+RUN cd $CASUAL_BUILD_HOME && source ./casual.env && casual-make link --debug && casual-make test && casual-make install
 # 1 test failing:
 # domain_manager.simple_server__signal_hangup
 # Ignoring for now and just installing
@@ -37,7 +41,13 @@ RUN source scl_source enable devtoolset-7 && cd $CASUAL_BUILD_HOME && casual-mak
 # same if /tmp/.casual/ipc can not be written to due to PERM error
 # RUN source scl_source enable devtoolset-7 && cd $CASUAL_BUILD_HOME && casual-make test && casual-make install
 
-RUN source scl_source enable devtoolset-7 && cd $CASUAL_BUILD_HOME && cd thirdparty/setup && CMAKE_CXX_COMPILER=g++ python install_nginx.py
+RUN cd $CASUAL_BUILD_HOME && cd thirdparty/setup && CMAKE_CXX_COMPILER=g++ python3 install_nginx.py
+
+RUN yum install -y gdb-gdbserver && yum install -y gdb && yum install -y glibc-common
+RUN yum install -y file && yum install -y binutils
+#RUN yum whatprovides objdump
+
+RUN echo "source /opt/rh/gcc-toolset-9/enable" >> /etc/bashrc
 
 COPY uid_entrypoint.sh $CASUAL_HOME/uid_entrypoint.sh
 
