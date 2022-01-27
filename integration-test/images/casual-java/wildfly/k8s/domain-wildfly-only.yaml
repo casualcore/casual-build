@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wildfly-only
+  labels:
+    app: wildfly-only
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wildfly-only
+  template:
+    metadata:
+      labels:
+        app: wildfly-only
+    spec:
+      containers:
+      - name: wildfly
+        image: wildfly-casual-java-test-application:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 7772
+        - containerPort: 9990
+        - containerPort: 8080
+        - containerPort: 8787

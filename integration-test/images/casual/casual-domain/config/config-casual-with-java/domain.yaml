@@ -4,15 +4,30 @@ domain:
       instances: 1
       restart: false
   gateway:
-    listeners:
-      - address: 0.0.0.0:7771    
-    connections:
-      - address: 0.0.0.0:7772
-        services:
-          - testJavaService
-          - anotherJavaService
-          - testJavaServiceAgain
-          - anotherJavaServiceAgain
+    inbound:
+      groups:
+        - alias: "casual-inbound"
+          connections:
+            - address: 0.0.0.0:7771
+              discovery:
+                forward: true
+              note: "discovery will be forward to all outbounds"
+    outbound:
+      groups:
+        - alias: "java"
+          connections:
+            - address: wildfly-only-inbound:7772
+              services:
+                - testJavaService
+                - anotherJavaService
+                - testJavaServiceAgain
+                - anotherJavaServiceAgain
+                - testCreateOrder
+                - testGetOrderById
+                - testUpdateOrder
+                - testUpdateOrder
+                - testDeleteOrderById
+                - rollback
 
   name: test-domain
   servers:    

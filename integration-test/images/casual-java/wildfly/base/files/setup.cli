@@ -17,12 +17,24 @@ set connectionDefinitionNode=$baseNode/connection-definitions=casual-pool
 $connectionDefinitionNode:add(\
     class-name=se.laz.casual.jca.CasualManagedConnectionFactory,\
     jndi-name=eis/casualConnectionFactoryDefault,\
-    min-pool-size=5, initial-pool-size=5, max-pool-size=5,\
+    min-pool-size=20, initial-pool-size=20, max-pool-size=20,\
     enabled=true)
 
 $connectionDefinitionNode/config-properties=HostName:add(value=0.0.0.0)
 $connectionDefinitionNode/config-properties=PortNumber:add(value=7771)
 
+
+#set connectionDefinitionNode=$baseNode/connection-definitions=another-casual-pool
+#$connectionDefinitionNode:add(\
+#    class-name=se.laz.casual.jca.CasualManagedConnectionFactory,\
+#    jndi-name=eis/anotherCasualConnectionFactoryDefault,\
+#    min-pool-size=20, initial-pool-size=20, max-pool-size=20,\
+#    enabled=true)
+
+#$connectionDefinitionNode/config-properties=HostName:add(value=casual)
+#$connectionDefinitionNode/config-properties=PortNumber:add(value=7771)
+
 deploy /opt/jboss/wildfly/casual-jca-app-${env.CASUAL_VERSION}.ear
+deploy /opt/jboss/wildfly/casual-caller-app-${env.CASUAL_CALLER_VERSION}.ear
 
 stop-embedded-server

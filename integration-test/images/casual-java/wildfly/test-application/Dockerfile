@@ -3,6 +3,7 @@ FROM wildfly-base:latest
 COPY files/setup.cli /tmp
 
 COPY files/casual-java-testapp.war ${WILDFLY_HOME}/standalone/deployments
+COPY files/casual-inbound-startup-trigger-app-${CASUAL_VERSION}.ear ${WILDFLY_HOME}/standalone/deployments
 
 RUN ${WILDFLY_HOME}/bin/jboss-cli.sh --file=/tmp/setup.cli
 

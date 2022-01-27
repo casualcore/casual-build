@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wls-only
+  labels:
+    app: wls-only
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wls-only
+  template:
+    metadata:
+      labels:
+        app: wls-only
+    spec:
+      containers:
+      - name: wls
+        image: casual-weblogic-jca:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 7772
+        - containerPort: 7001
+        - containerPort: 5557

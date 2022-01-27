@@ -24,22 +24,25 @@ FROM casual-weblogic-domain
 MAINTAINER Bruno Borges <bruno.borges@oracle.com>
 
 USER root
-RUN apt-get update && apt-get -y upgrade && apt-get -y install net-tools && apt-get -y install python && apt-get -y install emacs-nox
+RUN apt-get update && apt-get -y upgrade && apt-get -y install net-tools && apt-get -y install python && apt-get -y install emacs-nox && apt-get -y install procps && apt-get -y install lsof && apt-get -y install util-linux
 
-ENV Foo foo
+#RUN echo '* - nofile 8196' > /etc/security/limits.conf
 
 RUN mkdir /u01/oracle/casual
 
-ENV CASUAL_VERSION 1.0.39-beta
+ENV CASUAL_VERSION 1.0.66-beta
+ENV CASUAL_CALLER_VERSION 1.2.2
+#ENV CASUAL_INBOUND_STARTUP_MODE trigger
 
 COPY "files/casual-inbound-handler-api-${CASUAL_VERSION}.jar" /u01/oracle/casual/
 COPY "files/casual-fielded-annotations-${CASUAL_VERSION}.jar" /u01/oracle/casual/
 COPY "files/casual-service-discovery-extension-${CASUAL_VERSION}.jar" /u01/oracle/casual/
 COPY "files/casual-api-${CASUAL_VERSION}.jar" /u01/oracle/casual/
-COPY files/gson-2.8.1.jar /u01/oracle/casual/
+COPY "files/casual-inbound-startup-trigger-app-${CASUAL_VERSION}.ear" /u01/oracle/casual/
+COPY files/gson-2.8.6.jar /u01/oracle/casual/
 COPY files/objenesis-2.6.jar /u01/oracle/casual/
 
-ENV CLASSPATH="/u01/oracle/casual/casual-inbound-handler-api-${CASUAL_VERSION}.jar:/u01/oracle/casual/casual-service-discovery-extension-${CASUAL_VERSION}.jar:/u01/oracle/casual/casual-fielded-annotations-${CASUAL_VERSION}.jar:/u01/oracle/casual/casual-api-${CASUAL_VERSION}.jar:/u01/oracle/casual/gson-2.8.1.jar:/u01/oracle/casual/objenesis-2.6.jar"
+ENV CLASSPATH="/u01/oracle/casual/casual-inbound-handler-api-${CASUAL_VERSION}.jar:/u01/oracle/casual/casual-service-discovery-extension-${CASUAL_VERSION}.jar:/u01/oracle/casual/casual-fielded-annotations-${CASUAL_VERSION}.jar:/u01/oracle/casual/casual-api-${CASUAL_VERSION}.jar:/u01/oracle/casual/gson-2.8.6.jar:/u01/oracle/casual/objenesis-2.6.jar"
 ENV JAVA_OPTIONS="-XX:+UnlockCommercialFeatures -XX:+FlightRecorder \
                 -Djava.rmi.server.hostname=127.0.0.1 \
                 -Dcom.sun.management.jmxremote.port=9090 \
@@ -77,11 +80,13 @@ ENV APP_NAME="casual-jca-app-${CASUAL_VERSION}" \
     APP_MODULE_TYPE="ear"\
     APP_DEPLOYMENT_ORDER=50\
     APP_DEPLOYMENT_PLAN="/u01/oracle/Plan.xml"
-
 RUN wlst.sh /u01/oracle/app-deploy.py
+
 
 # Create JTA datasource for sample application database.
 RUN wlst.sh /u01/oracle/add-datasource.py
+
+COPY "files/casual-caller-app-${CASUAL_CALLER_VERSION}.ear" /u01/oracle/user_projects/domains/base_domain/autodeploy/
 
 # Copy war file for auto deployment to ensure persistence.xml is initialised. Don't happen with offline mode.
 COPY files/casual-java-testapp.war /u01/oracle/user_projects/domains/base_domain/autodeploy/
