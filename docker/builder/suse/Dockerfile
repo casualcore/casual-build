@@ -1,15 +1,12 @@
-FROM opensuse:latest
+FROM opensuse/leap:15
 MAINTAINER flurig <flurig@localhost>
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive install rpmbuild libuuid-devel pugixml-devel sqlite3-devel gcc6 gcc6-c++ git python make wget cmake tar rsync python-pip zlib-devel unzip libcurl-devel
+RUN zypper --non-interactive install rpmbuild libuuid-devel sqlite3-devel gcc11 gcc11-c++ git python3 make wget cmake tar rsync zlib-devel unzip libcurl-devel
 
 RUN ls -lrt /usr/bin
-RUN ln -sf /usr/bin/gcc-6 /usr/bin/gcc
-RUN ln -sf /usr/bin/g++-6 /usr/bin/g++
-
-RUN wget --no-check-certificate https://github.com/jbeder/yaml-cpp/archive/release-0.3.0.tar.gz && tar xf release-0.3.0.tar.gz && cd yaml-cpp-release-0.3.0 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && make install && rm -rf /release-0.3.0.tar.gz /yaml-cpp-release-0.3.0
-RUN pip install gcovr
+RUN ln -sf /usr/bin/gcc-11 /usr/bin/gcc
+RUN ln -sf /usr/bin/g++-11 /usr/bin/g++
 
 ENV CASUAL_REPO_ROOT /git
 ENV CASUAL_TOOLS_HOME $CASUAL_REPO_ROOT/casual
@@ -27,6 +24,7 @@ ENV PATH $CASUAL_BUILD_HOME/tools/bin:$CASUAL_TOOLS_HOME/bin:$CASUAL_HOME/bin:$P
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$CASUAL_HOME/lib:$CASUAL_BUILD_HOME/configuration/bin:$CASUAL_BUILD_HOME/common/bin:$CASUAL_BUILD_HOME/serviceframework/bin:$CASUAL_BUILD_HOME/xatmi/bin:/usr/local/lib
 ENV CASUAL_DOMAIN_HOME /test/casual
 ENV CASUAL_LOG '.*'
+ENV CASUAL_LOG_PATH /git/casual/casual.log
 
 RUN mkdir -p /git/casual ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 RUN echo '%_topdir %(echo $HOME)/rpmbuild' > ~/.rpmmacros
@@ -34,5 +32,6 @@ RUN echo '%_topdir %(echo $HOME)/rpmbuild' > ~/.rpmmacros
 RUN mkdir -p /git/casual
 VOLUME /git/casual
 RUN echo 'export PATH=$PATH:/git/casual/bin' >> /.bashrc
+RUN git config --global --add safe.directory /git/casual/casual
 
 ENTRYPOINT ["/git/casual/builder.sh"]
