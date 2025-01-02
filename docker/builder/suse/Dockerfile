@@ -2,11 +2,12 @@ FROM opensuse/leap:15
 MAINTAINER flurig <flurig@localhost>
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive install rpmbuild libuuid-devel sqlite3-devel gcc11 gcc11-c++ git python3 make wget cmake tar rsync zlib-devel unzip libcurl-devel
+RUN zypper --non-interactive install rpmbuild libuuid-devel sqlite3-devel gcc13 gcc13-c++ git python39 make wget cmake tar rsync zlib-devel unzip libcurl-devel
 
 RUN ls -lrt /usr/bin
-RUN ln -sf /usr/bin/gcc-11 /usr/bin/gcc
-RUN ln -sf /usr/bin/g++-11 /usr/bin/g++
+RUN ln -sf /usr/bin/gcc-13 /usr/bin/gcc
+RUN ln -sf /usr/bin/g++-13 /usr/bin/g++
+RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
 
 ENV CASUAL_REPO_ROOT /git
 ENV CASUAL_TOOLS_HOME $CASUAL_REPO_ROOT/casual
