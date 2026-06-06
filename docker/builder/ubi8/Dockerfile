@@ -1,7 +1,7 @@
 FROM redhat/ubi8
 MAINTAINER flurig <flurig@localhost>
 
-RUN yum --exclude=iputils -y update && yum -y install wget cmake make python39 rsync libuuid-devel zlib-devel unzip rpm-build libcurl-devel git
+RUN yum --exclude=iputils -y update && yum -y install wget cmake make python3 rsync libuuid-devel zlib-devel unzip rpm-build libcurl-devel
 RUN yum -y install gcc-toolset-14-gcc* && scl enable gcc-toolset-14 bash
 RUN pip3 install conan
 ADD sqlite-autoconf-3530100.tar.gz /tmp/.
